@@ -4,7 +4,7 @@ import {IRes} from "../types/IRes.ts";
 import {IUser, IUsers} from "../interface/user.interfaces.ts";
 
 const userService = {
-    getAllByEventId: (eventId: string, page: string, sortBy: string): IRes<IUsers> => apiService.get(urls.usersByEventId(eventId), {params: {page, sortBy}}),
+    getAllByEventId: (eventId: string, page: number, sortBy: string): IRes<IUsers> => apiService.get(urls.usersByEventId(eventId), {params: {page, sortBy}}),
     createUser: (data: IUser): IRes<IUser> => apiService.post(urls.users, data)
 }
 

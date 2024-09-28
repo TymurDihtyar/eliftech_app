@@ -4,12 +4,12 @@ export interface IUser {
     event_id: number
     name: string
     email: string
-    date_birth: Date
-    where_hear: EWhereHear
+    birthDate: Date
+    whereHear: EWhereHear
 }
 
 export interface IUsers {
-    data: IUser[]
+    users: IUser[]
     meta: {
         page: number
         total: number
