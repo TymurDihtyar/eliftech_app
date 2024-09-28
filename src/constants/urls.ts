@@ -6,7 +6,7 @@ const users = '/users';
 const urls = {
     events,
     users,
-    usersByEventId: (eventId: string) => `${users}/${eventId}`,
+    usersByEventId: (eventId: number) => `${users}/${eventId}`,
 }
 export {
     baseURL,

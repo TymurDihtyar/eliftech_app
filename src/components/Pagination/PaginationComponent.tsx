@@ -2,7 +2,6 @@ import { FC, PropsWithChildren } from 'react';
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -32,7 +31,7 @@ const PaginationComponent: FC<IProps> = ({ meta }) => {
                 <PaginationItem key={i}>
                     <PaginationLink
                         onClick={() => changePage(i)}
-                        active={i === page}
+                        isActive={i === page}
                     >
                         {i}
                     </PaginationLink>

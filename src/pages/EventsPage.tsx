@@ -15,7 +15,7 @@ import {useSearchParams} from "react-router-dom";
 
 
 const EventsPage = () => {
-    const [eventsData, setEventsData] = useState<IEvents>(null)
+    const [eventsData, setEventsData] = useState<IEvents>()
     const [query, setQuery] = useSearchParams({page: '1', sortBy: 'title'});
     const page = query.get('page') || '1'
     const sortBy = query.get('sortBy') || 'title'

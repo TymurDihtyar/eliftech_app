@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -28,30 +28,38 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
+import {userService} from "@/services/userService.ts";
+import {EWhereHear} from "@/enums/whereHear.enum.ts";
+import {toast} from "react-toastify";
+import {toastifyParam} from "@/constants/tostifyParamers.ts";
 
 const formSchema = z.object({
-    username: z.string().min(2).max(50),
+    name: z.string().min(2).max(50),
     email: z.string().regex(/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/),
     birthDate: z.date({
         required_error: "A date of birth is required.",
     }),
-    whereHear: z.enum(["social_media", "friends", "found_myself"], {
+    whereHear: z.nativeEnum(EWhereHear, {
         required_error: "You need to select a notification type.",
     }),
-})
+});
 
 const FormRegistration = () => {
-    // const navigate = useNavigate();
-
+    const navigate = useNavigate();
+    const { id } = useParams<string>();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        // reset();
-        // navigate('/');
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const event_id = Number(id);
+        try {
+            await userService.createUser({...values, event_id});
+            navigate(`/users/${id}`);
+            form.reset();
+        } catch (error: any) {
+            toast.error(`${error.response?.data?.message || error.message}`, toastifyParam);
+        }
     };
 
     return (
@@ -64,7 +72,7 @@ const FormRegistration = () => {
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                         <FormField
                             control={form.control}
-                            name="username"
+                            name="name"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Full Name</FormLabel>
@@ -171,7 +179,9 @@ const FormRegistration = () => {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <div className='w-full flex justify-end'>
+                            <Button type="submit">Submit</Button>
+                        </div>
                     </form>
                 </Form>
             </CardContent>
