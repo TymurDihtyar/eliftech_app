@@ -1,4 +1,6 @@
-const baseURL = 'http://localhost:3006';
+const appUrl = import.meta.env.VITE_APP_URL;
+
+const baseURL = appUrl || 'http://localhost:3000';
 
 const events = '/events';
 const users = '/users';
