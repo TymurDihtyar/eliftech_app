@@ -57,7 +57,7 @@ const UsersPage = () => {
                     <PaginationComponent meta={usersData.meta} />
                 </>
             ) : (
-                <div>Loading events...</div>
+                <div>Loading users...</div>
             )}
         </div>
     );
